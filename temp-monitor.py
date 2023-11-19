@@ -4,6 +4,7 @@ import os
 import socket
 from typing import TypedDict
 from time import time, sleep
+from pathlib import Path
 
 from w1thermsensor import Unit, W1ThermSensor
 
@@ -28,24 +29,30 @@ class LogData(TypedDict):
 
 def get_ip_addr():
     s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-    s.connect(('0.0.0.0', 1))
+    s.connect(('8.8.8.8', 1))
     return s.getsockname()[0]
 
 def load_data() -> LogData:
-    with open('data.json', 'r', encoding='utf-8') as f:
-        data: LogData = json.load(f)
-    data.setdefault('meta', [])
-    data.setdefault('data', [])
+    try:
+        with open(DATA_FILE, 'r', encoding='utf-8') as f:
+            data: LogData = json.load(f)
+            data.setdefault('meta', [])
+            data.setdefault('data', [])
+    except FileNotFoundError:
+        data = LogData(meta=[], data=[])
     return data
 
 
 def save_data(data: LogData):
-    with open('data.json', 'w', encoding='utf-8') as f:
-        json.dump(data, f)
+    with open(DATA_FILE, 'w', encoding='utf-8') as f:
+        json.dump(data, f, indent=2)
 
 
 if __name__ == '__main__':
-    logging.basicConfig(filename='log.txt', level=logging.DEBUG, format='%(asctime)s %(levelname)s: %(message)s')
+    DATA_FILE = (Path(__file__).parent / 'data.json').absolute()
+    LOG_FILE = (Path(__file__).parent / 'log.txt').absolute()
+
+    logging.basicConfig(filename=LOG_FILE, level=logging.DEBUG, format='%(asctime)s %(levelname)s: %(message)s')
     logging.info(f'Temp monitor started. Working dir: {os.getcwd()}')
     HOSTNAME = socket.gethostname()
     IP_ADDR = get_ip_addr()
@@ -68,4 +75,4 @@ if __name__ == '__main__':
             logging.info(f'reading: {therm!r}')
 
         save_data(data)
-        time.sleep(DELAY)
+        sleep(DELAY)
