@@ -1,5 +1,7 @@
 # RPI Temp Monitor
 
+A super simple project for setting up a temperature monitor using a Raspberry PI.
+
 ## Setup
 
 ### Hardware
@@ -42,3 +44,4 @@ wget https://raw.githubusercontent.com/Crozzers/rpi-temp-monitor/main/rpi-setup.
 chmod +x rpi-setup.sh
 sudo ./rpi-setup.sh
 ```
+This will update the system, install requirements, fetch the monitoring script and modify `/etc/rc.local` to launch the script on boot.
