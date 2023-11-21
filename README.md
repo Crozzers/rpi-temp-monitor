@@ -34,7 +34,7 @@ sudo nmap -sn 192.168.[subnet].0/24 | grep -i raspberry -B 2
 ```
 Take the IP address from that command and plug it into ssh:
 ```bash
-ssh [hostname]@[IP address]
+ssh [username]@[IP address]
 ```
 
 ### WiFi Setup
