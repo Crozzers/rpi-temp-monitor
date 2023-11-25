@@ -14,7 +14,8 @@ You will need:
 - Three GPIO jumper wires
 - Breadboard
 
-Wire up the sensor as shown in [this diagram](https://www.circuitbasics.com/wp-content/uploads/2016/03/Raspberry-Pi-DS18B20.png).
+Wire up the sensor as shown in [this diagram](https://www.circuitbasics.com/wp-content/uploads/2016/03/Raspberry-Pi-DS18B20.png) taken from
+[this article](https://www.circuitbasics.com/raspberry-pi-ds18b20-temperature-sensor-tutorial/).
 
 ### Install OS
 
