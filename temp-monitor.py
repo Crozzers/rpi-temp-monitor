@@ -52,7 +52,14 @@ if __name__ == '__main__':
     DATA_FILE = (Path(__file__).parent / 'data.json').absolute()
     LOG_FILE = (Path(__file__).parent / 'log.txt').absolute()
 
-    logging.basicConfig(filename=LOG_FILE, level=logging.DEBUG, format='%(asctime)s %(levelname)s: %(message)s')
+    logging.basicConfig(
+        level=logging.DEBUG,
+        format='%(asctime)s %(levelname)s: %(message)s',
+        handlers=[
+            logging.FileHandler(LOG_FILE),
+            logging.StreamHandler()
+        ]
+    )
     logging.info(f'Temp monitor started. Working dir: {os.getcwd()}')
     HOSTNAME = socket.gethostname()
     IP_ADDR = get_ip_addr()
