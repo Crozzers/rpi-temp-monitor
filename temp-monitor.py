@@ -2,7 +2,7 @@ import json
 import logging
 import os
 import socket
-from typing import TypedDict
+from typing import TypedDict, Union
 from time import time, sleep
 from pathlib import Path
 
@@ -27,10 +27,14 @@ class LogData(TypedDict):
     data: list[ThermData]
 
 
-def get_ip_addr():
+def get_ip_addr() -> Union[str, None]:
     s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-    s.connect(('8.8.8.8', 1))
-    return s.getsockname()[0]
+    try:
+        s.connect(('8.8.8.8', 1))
+        return s.getsockname()[0]
+    except OSError:
+        logging.exception('failed to obtain IP address')
+        return None
 
 def load_data() -> LogData:
     try:
@@ -71,6 +75,10 @@ if __name__ == '__main__':
     data['meta'].append(Metadata(ip=IP_ADDR, host=HOSTNAME, start=time()))
 
     while True:
+        if IP_ADDR is None:
+            IP_ADDR = get_ip_addr()
+            if IP_ADDR:
+                logging.debug(f'IP address acquired! {IP_ADDR=}')
         try:
             sensor = W1ThermSensor()
             assert sensor.exists()
