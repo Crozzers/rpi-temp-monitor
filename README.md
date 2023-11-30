@@ -46,6 +46,11 @@ Follow [these steps](https://github.com/Brisso/Raspberry-Pi-Documentation/blob/m
 from the RPI networking documentation. See also the section on
 [adding multiple wireless networks](https://github.com/Brisso/Raspberry-Pi-Documentation/blob/master/configuration/wireless/wireless-cli.md#adding-multiple-wireless-network-configurations).
 
+You can also use this command to add the network to your `wpa_supplicant` file:
+```bash
+echo "[wifi password]" | wpa_passphrase "[SSID]" | grep -v "#" | sudo tee -a /etc/wpa_supplicant/wpa_supplicant.conf
+```
+
 ### Software setup
 
 On the Pi, fetch the install script and run it.
