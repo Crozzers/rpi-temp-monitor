@@ -24,7 +24,7 @@ During the process it will ask if you want to customize the OS settings. Do this
 - Hostname
 - Username/password
 - Wifi (see [WiFi setup section](#wifi-setup))
-- Keyboard layout (set it to GB)
+- Keyboard layout (defaults to US layout)
 - SSH (enable and require password)
 
 ### Connecting to Pi
